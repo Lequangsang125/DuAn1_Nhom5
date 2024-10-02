@@ -1,0 +1,23 @@
+Hướng dẫn xây dựng authen:
+	- login page
+	- register page
+	- keep login
+	- logout.php
+		- huy cookie
+		- huy session
+		- xoa khoi bang Tokens
+
+-> login thành công:
+	- generate token (duy nhất: cho tài khoản + tài thời điểm login)
+	- token -> cookie
+		- get cookie -> của người dùng nào -> validate auto login
+		- lưu token -> vào CSDL -> quản lý nó.
+		- kết hợp sử dụng session -> hệ thống này tối ưu hơn về login.
+	- validate login auto.
+
+create table tokens (
+	user_id int references User (id),
+	token varchar(32) not null,
+	created_at datetime,
+	PRIMARY key (user_id, token)
+)

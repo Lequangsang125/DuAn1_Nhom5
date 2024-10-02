@@ -1,0 +1,76 @@
+Xây dựng: Website Bán Hàng
+Mẫu thiết kế: t004.gokisoft.com
+
+Hướng dẫn phân tích thiết kế database
+
+1) Bảng Role
+	- id: int -> Khoá chính tự tăng
+	- name: string (varchar) - 20 ký tự
+2) Bảng User
+	- id: int -> Khoá chính tự tăng
+	- fullname -> string -> 50 ký tự
+	- email -> string -> 150 ký tự -> unique
+	- phone_number -> string -> 20 ký tự
+	- address -> string -> 200 ký tự
+	- password -> string -> md5 -> 32 ký tự -> chính xác
+	- role_id -> int -> foreign key -> role (id)
+	- created_at: datetime -> tạo bản ghi
+	- updated_at: datetime -> sửa bản ghi đó.
+3) Bảng Danh Mục -> Category
+	- id: int -> Khoá tự tăng
+	- name: string -> 100 ký tự
+4) Bảng sản phẩm -> Product
+	- id: int -> Khoá tự tăng
+	- category_id -> int -> foreign key -> category (id)
+	- title: string -> 350 ký tự
+	- price: int
+	- discount: int
+	- thumbnail: string -> 500 ký tự
+	- description: longtext
+	- created_at: datetime -> tạo bản ghi
+	- updated_at: datetime -> sửa bản ghi đó.
+5) Bảng quản lý galery
+	- id: int -> Khoá tự tăng
+	- product_id -> int -> foreign key -> product (id)
+	- thumbnail -> string -> 500 ký tự
+6) Bảng quản lý phản hồi -> feedback
+	- id: int -> Khoá tự tăng
+	- firstname -> string -> 30 ký tự
+	- lastname -> string -> 30 ký tự
+	- email -> string -> 150 ký tự
+	- phone_number -> string -> 20 ký tự
+	- subject_name -> string -> 200 ký tự
+	- note -> string (varchar) -> độ dài tối đa -> 500 ký tự
+7) Quản lý đơn hàng:
+	- id: int tự tăng
+	- fullname
+	- email
+	- phone_number
+	- address
+	- note
+	- order_date: datetime -> thời điểm đặt đơn hàng
+	- Danh sách sản phẩm:
+		- sản phẩm 1 x số lượng x giá thời điểm mua
+		- sản phẩm 2 x số luong x giá tời điểm mua
+
+	7.1) Bảng Order
+		- id: int tự tăng
+		- user_id: int -> foreign key -> user (id)
+		- fullname
+		- email
+		- phone_number
+		- address
+		- note
+		- order_date: datetime -> thời điểm đặt đơn hàng
+		- status: int -> (pending, approved, ...)
+		- total_money -> int -> Tổng tiền của đơn hàng.
+	7.2) Bảng chi tiết đơn hàng
+		- id: int tự tăng
+		- order_id -> int -> foreign key -> order (id)
+		- product_id -> int -> foreign key -> product (id)
+		- price -> int
+		- num -> int -> số luong sản phẩm mua
+		- total_money -> lưu tổng tiền của sản phẩm (price * num)
+
+Tao database
+	-> database.sql

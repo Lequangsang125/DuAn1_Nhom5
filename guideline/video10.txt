@@ -1,0 +1,8 @@
+alter table FeedBack
+add created_at datetime;
+
+alter table FeedBack
+add updated_at datetime;
+
+alter table FeedBack
+add status int default 0;
