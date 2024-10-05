@@ -29,6 +29,9 @@
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
 
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 	<style type="text/css">
 		.nav li {
 			text-transform: uppercase;
@@ -110,12 +113,12 @@
 	  <li class="nav-item">
 	    <a class="nav-link" href="contact.php">Liên Hệ</a>
 	  </li>
-	  <!-- <li class="nav-item">
-	    <a class="nav-link" href="../../webbanhang1/admin/authen/login.php">Đăng nhập</a>
-	  </li>
+
 	  <li class="nav-item">
-	    <a class="nav-link" href="../../webbanhang1/admin/authen/logout.php">Đăng xuất</a>
-	  </li> -->
+	    <a class="nav-link" href="../../webbanhang1/status.php">Trạng thái đơn hàng</a>
+	  </li>
+	 
+
 	</ul>
 </div>
 <!-- Menu Stop -->
