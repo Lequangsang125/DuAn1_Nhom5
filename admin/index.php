@@ -8,55 +8,76 @@ require_once('layouts/header.php');
 require_once('../database/dbhelper.php');
 
 // Truy vấn để đếm số lượng feedback
-$sql = "SELECT COUNT(*) as total FROM Feedback"; // Giả sử bảng feedback có tên là Feedback
+$sql = "SELECT COUNT(*) as total FROM Feedback"; 
 $result = executeResult($sql, true); // Thực hiện truy vấn
 $totalFeedback = $result['total']; // Lấy số lượng feedback
+
+
+$sql = "SELECT COUNT(*) as total FROM Orders"; 
+$result = executeResult($sql, true); // Thực hiện truy vấn
+$totalOrders = $result['total']; // Lấy số lượng feedback
+
+$sql = "SELECT COUNT(*) as total FROM User"; 
+$result = executeResult($sql, true); // Thực hiện truy vấn
+$totalUser = $result['total']; // Lấy số lượng feedback
+
+$sql = "SELECT SUM(total_money) AS totalRevenue FROM Orders";
+$result = executeResult($sql,true);
+$totalMoney = $result['totalRevenue'];
+
+$sql = "select * from Orders order by status asc, order_date desc";
+$data = executeResult($sql);
+
 
 
 ?>
 	<div class="col-md-12">
 <!-- ======================= Cards ================== -->
 <div class="cardBox">
+
+<a href="../admin/user/index.php">
     <div class="card">
         <div>
-            <div class="numbers">1,504</div>
-            <div class="cardName">Daily Views</div>
+            <div class="numbers"><?=$totalUser?></div>
+            <div class="cardName">Người dùng</div>
         </div>
 
         <div class="iconBx">
-            <ion-icon name="eye-outline"></ion-icon>
+            <ion-icon name="person-outline"></ion-icon>
         </div>
     </div>
+    </a>
 
+    <a href="../admin/order/index.php">
     <div class="card">
         <div>
-            <div class="numbers">80</div>
-            <div class="cardName">Sales</div>
+        <div class="numbers"><?= $totalOrders ?></div>
+            <div class="cardName">Đơn hàng</div>
         </div>
 
         <div class="iconBx">
             <ion-icon name="cart-outline"></ion-icon>
         </div>
     </div>
+    </a>
 
+    <a href="../admin/feedback/index.php">
     <div class="card">
         <div>
             <div class="numbers"><?= $totalFeedback ?></div>
-            <a href="../admin/feedback/index.php">
                 <!-- Đường dẫn đến trang danh sách feedback -->
-                <div class="cardName">Feedback</div>
-            </a>
+                <div class="cardName">Phản hồi</div>
         </div>
-
         <div class="iconBx">
             <ion-icon name="chatbubbles-outline"></ion-icon>
         </div>
     </div>
+    </a>
 
     <div class="card">
         <div>
-            <div class="numbers">$7,842</div>
-            <div class="cardName">Earning</div>
+            <div class="numbers"><?=$totalMoney?>đ</div>
+            <div class="cardName">Tổng tiền</div>
         </div>
 
         <div class="iconBx">
@@ -66,163 +87,21 @@ $totalFeedback = $result['total']; // Lấy số lượng feedback
 </div>
 
 <!-- ================ Order Details List ================= -->
-<div class="details">
-    <div class="recentOrders">
-        <div class="cardHeader">
-            <h2>Recent Orders</h2>
-            <a href="#" class="btn">View All</a>
-        </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <td>Name</td>
-                    <td>Price</td>
-                    <td>Payment</td>
-                    <td>Status</td>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td>Star Refrigerator</td>
-                    <td>$1200</td>
-                    <td>Paid</td>
-                    <td><span class="status delivered">Delivered</span></td>
-                </tr>
-
-                <tr>
-                    <td>Dell Laptop</td>
-                    <td>$110</td>
-                    <td>Due</td>
-                    <td><span class="status pending">Pending</span></td>
-                </tr>
-
-                <tr>
-                    <td>Apple Watch</td>
-                    <td>$1200</td>
-                    <td>Paid</td>
-                    <td><span class="status return">Return</span></td>
-                </tr>
-
-                <tr>
-                    <td>Addidas Shoes</td>
-                    <td>$620</td>
-                    <td>Due</td>
-                    <td><span class="status inProgress">In Progress</span></td>
-                </tr>
-
-                <tr>
-                    <td>Star Refrigerator</td>
-                    <td>$1200</td>
-                    <td>Paid</td>
-                    <td><span class="status delivered">Delivered</span></td>
-                </tr>
-
-                <tr>
-                    <td>Dell Laptop</td>
-                    <td>$110</td>
-                    <td>Due</td>
-                    <td><span class="status pending">Pending</span></td>
-                </tr>
-
-                <tr>
-                    <td>Apple Watch</td>
-                    <td>$1200</td>
-                    <td>Paid</td>
-                    <td><span class="status return">Return</span></td>
-                </tr>
-
-                <tr>
-                    <td>Addidas Shoes</td>
-                    <td>$620</td>
-                    <td>Due</td>
-                    <td><span class="status inProgress">In Progress</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <script type="text/javascript">
+	function changeStatus(id, status) {
+		$.post('form_api.php', {
+			'id': id,
+			'status': status,
+			'action': 'update_status'
+		}, function(data) {
+			location.reload()
+		})
+	}
+</script>
 
     <!-- ================= New Customers ================ -->
-    <div class="recentCustomers">
-        <div class="cardHeader">
-            <h2>Recent Customers</h2>
-        </div>
 
-        <table>
-            <tr>
-                <td width="60px">
-                    <div class="imgBx"><img src="../assets/photos/customer02.jpg" alt=""></div>
-                </td>
-                <td>
-                    <h4>David <br> <span>Italy</span></h4>
-                </td>
-            </tr>
-
-            <tr>
-                <td width="60px">
-                    <div class="imgBx"><img src="../assets/photos/customer01.jpg" alt=""></div>
-                </td>
-                <td>
-                    <h4>Amit <br> <span>India</span></h4>
-                </td>
-            </tr>
-
-            <tr>
-                <td width="60px">
-                    <div class="imgBx"><img src="../assets/photos/customer02.jpg" alt=""></div>
-                </td>
-                <td>
-                    <h4>David <br> <span>Italy</span></h4>
-                </td>
-            </tr>
-
-            <tr>
-                <td width="60px">
-                    <div class="imgBx"><img src="../assets/photos/customer01.jpg" alt=""></div>
-                </td>
-                <td>
-                    <h4>Amit <br> <span>India</span></h4>
-                </td>
-            </tr>
-
-            <tr>
-                <td width="60px">
-                    <div class="imgBx"><img src="../assets/photos/customer02.jpg" alt=""></div>
-                </td>
-                <td>
-                    <h4>David <br> <span>Italy</span></h4>
-                </td>
-            </tr>
-
-            <tr>
-                <td width="60px">
-                    <div class="imgBx"><img src="../assets/photos/customer01.jpg" alt=""></div>
-                </td>
-                <td>
-                    <h4>Amit <br> <span>India</span></h4>
-                </td>
-            </tr>
-
-            <tr>
-                <td width="60px">
-                    <div class="imgBx"><img src="../assets/photos/customer01.jpg" alt=""></div>
-                </td>
-                <td>
-                    <h4>David <br> <span>Italy</span></h4>
-                </td>
-            </tr>
-
-            <tr>
-                <td width="60px">
-                    <div class="imgBx"><img src="../assets/photos/customer02.jpg" alt=""></div>
-                </td>
-                <td>
-                    <h4>Amit <br> <span>India</span></h4>
-                </td>
-            </tr>
-        </table>
-    </div>
 </div>
 </div>
 </div>
