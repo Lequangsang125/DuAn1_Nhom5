@@ -4,11 +4,11 @@ require_once('../../utils/utility.php');
 require_once('../../database/dbhelper.php');
 
 $user = getUserToken();
-if($user == null) {
+if ($user == null) {
 	die();
 }
 
-if(!empty($_POST)) {
+if (!empty($_POST)) {
 	$action = getPost('action');
 
 	switch ($action) {
@@ -18,7 +18,8 @@ if(!empty($_POST)) {
 	}
 }
 
-function updateStatus() {
+function updateStatus()
+{
 	$id = getPost('id');
 	$status = getPost('status');
 

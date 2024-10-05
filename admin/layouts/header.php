@@ -131,7 +131,7 @@ session_start();
                 </div>
 
                 <div class="user">
-                    <img src="<?=$baseUrl?>../assets/imgs/customer01.jpg" alt="">
+                    <img src="<?=$baseUrl?>../assets/photos/customer01.jpg" alt="">
                 </div>
             </div>
 

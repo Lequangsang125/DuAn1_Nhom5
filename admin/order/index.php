@@ -1,11 +1,11 @@
 <?php
-	$title = 'Quản Lý Đơn Hàng';
-	$baseUrl = '../';
-	require_once('../layouts/header.php');
+$title = 'Quản Lý Đơn Hàng';
+$baseUrl = '../';
+require_once('../layouts/header.php');
 
-	//pending, approved, cancel
-	$sql = "select * from Orders order by status asc, order_date desc";
-	$data = executeResult($sql);
+//pending, approved, cancel
+$sql = "select * from Orders order by status asc, order_date desc";
+$data = executeResult($sql);
 ?>
 
 <div class="row" style="margin-top: 20px;">
@@ -27,31 +27,31 @@
 				</tr>
 			</thead>
 			<tbody>
-<?php
-	$index = 0;
-	foreach($data as $item) {
-		echo '<tr>
-					<th>'.(++$index).'</th>
-					<td><a href="detail.php?id='.$item['id'].'">'.$item['fullname'].'</a></td>
-					<td><a href="detail.php?id='.$item['id'].'">'.$item['phone_number'].'</a></td>
-					<td><a href="detail.php?id='.$item['id'].'">'.$item['email'].'</a></td>
-					<td>'.$item['address'].'</td>
-					<td>'.$item['note'].'</td>
-					<td>'.$item['total_money'].'</td>
-					<td>'.$item['order_date'].'</td>
+				<?php
+				$index = 0;
+				foreach ($data as $item) {
+					echo '<tr>
+					<th>' . (++$index) . '</th>
+					<td><a href="detail.php?id=' . $item['id'] . '">' . $item['fullname'] . '</a></td>
+					<td><a href="detail.php?id=' . $item['id'] . '">' . $item['phone_number'] . '</a></td>
+					<td><a href="detail.php?id=' . $item['id'] . '">' . $item['email'] . '</a></td>
+					<td>' . $item['address'] . '</td>
+					<td>' . $item['note'] . '</td>
+					<td>' . $item['total_money'] . '</td>
+					<td>' . $item['order_date'] . '</td>
 					<td style="width: 50px">';
-		if($item['status'] == 0) {
-			echo '<button onclick="changeStatus('.$item['id'].', 1)" class="btn btn-sm btn-success" style="margin-bottom: 10px;">Approve</button>
-			<button onclick="changeStatus('.$item['id'].', 2)" class="btn btn-sm btn-danger">Cancel</button>';
-		} else if($item['status'] == 1) {
-			echo '<label class="badge badge-success">Approved</label>';
-		} else {
-			echo '<label class="badge badge-danger">Cancel</label>';
-		}
-		echo '</td>
+					if ($item['status'] == 0) {
+						echo '<button onclick="changeStatus(' . $item['id'] . ', 1)" class="btn btn-sm btn-success" style="margin-bottom: 10px;">Chấp nhận</button>
+			<button onclick="changeStatus(' . $item['id'] . ', 2)" class="btn btn-sm btn-danger">Hủy</button>';
+					} else if ($item['status'] == 1) {
+						echo '<label class="badge badge-success">Chấp nhận</label>';
+					} else {
+						echo '<label class="badge badge-danger">Hủy</label>';
+					}
+					echo '</td>
 				</tr>';
-	}
-?>
+				}
+				?>
 			</tbody>
 		</table>
 	</div>
@@ -70,5 +70,5 @@
 </script>
 
 <?php
-	require_once('../layouts/footer.php');
+require_once('../layouts/footer.php');
 ?>
