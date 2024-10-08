@@ -117,9 +117,13 @@ $data = executeResult($sql);
                     <td>' . date("d-m-Y", strtotime($item['order_date'])) . '</td>
                     <td>';
                     if ($item['status'] == 0) {
-                        echo '<span class="badge badge-warning">Đơn chờ xử lý</span>';
+                        echo '<span class="badge badge-warning">Chờ xác nhận</span>';
                     } else if ($item['status'] == 1) {
-                        echo '<span class="badge badge-success">Đang giao hàng</span>';
+                        echo '<span class="badge badge-success">Chờ lấy hàng</span>';
+                    } else if ($item['status'] == 2) {
+                        echo '<span class="badge badge-success">Chờ giao hàng</span>';
+                    } else if ($item['status'] == 3) {
+                        echo '<span class="badge badge-success">Giao thành công</span>';
                     } else {
                         echo '<span class="badge badge-danger">Đơn bị hủy</span>';
                     }

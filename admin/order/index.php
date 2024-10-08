@@ -27,47 +27,50 @@ $data = executeResult($sql);
 				</tr>
 			</thead>
 			<tbody>
-				<?php
-				$index = 0;
-				foreach ($data as $item) {
-					echo '<tr>
-					<th>' . (++$index) . '</th>
-					<td><a href="detail.php?id=' . $item['id'] . '">' . $item['fullname'] . '</a></td>
-					<td><a href="detail.php?id=' . $item['id'] . '">' . $item['phone_number'] . '</a></td>
-					<td><a href="detail.php?id=' . $item['id'] . '">' . $item['email'] . '</a></td>
-					<td>' . $item['address'] . '</td>
-					<td>' . $item['note'] . '</td>
-					<td>' . $item['total_money'] . '</td>
-					<td>' . $item['order_date'] . '</td>
-					<td style="width: 50px">';
-					if ($item['status'] == 0) {
-						echo '<button onclick="changeStatus(' . $item['id'] . ', 1)" class="btn btn-sm btn-success" style="margin-bottom: 10px;">Chấp nhận</button>
-			<button onclick="changeStatus(' . $item['id'] . ', 2)" class="btn btn-sm btn-danger">Hủy</button>';
-					} else if ($item['status'] == 1) {
-						echo '<label class="badge badge-success">Chấp nhận</label>';
-					} else {
-						echo '<label class="badge badge-danger">Hủy</label>';
-					}
-					echo '</td>
-				</tr>';
-				}
-				?>
+			<?php 
+$index = 0;
+foreach ($data as $item) {
+    echo '<tr>
+        <th>' . (++$index) . '</th>
+        <td><a href="detail.php?id=' . $item['id'] . '">' . $item['fullname'] . '</a></td>
+        <td><a href="detail.php?id=' . $item['id'] . '">' . $item['phone_number'] . '</a></td>
+        <td><a href="detail.php?id=' . $item['id'] . '">' . $item['email'] . '</a></td>
+        <td>' . $item['address'] . '</td>
+        <td>' . $item['note'] . '</td>
+        <td>' . $item['total_money'] . '</td>
+        <td>' . $item['order_date'] . '</td>
+        <td style="width: 150px">';
+
+    // Dropdown menu thay đổi trạng thái
+    echo '<select onchange="changeStatus(' . $item['id'] . ', this.value)" class="form-select">
+            <option value="1" ' . ($item['status'] == 1 ? 'selected' : '') . '>Chờ lấy hàng</option>
+            <option value="2" ' . ($item['status'] == 2 ? 'selected' : '') . '>Chờ giao hàng</option>
+            <option value="3" ' . ($item['status'] == 3 ? 'selected' : '') . '>Đã giao hàng</option>
+            <option value="4" ' . ($item['status'] == 4 ? 'selected' : '') . '>Hủy</option>
+          </select>';
+
+    echo '</td></tr>';
+}
+?>
+
+
 			</tbody>
 		</table>
 	</div>
 </div>
-
 <script type="text/javascript">
-	function changeStatus(id, status) {
-		$.post('form_api.php', {
-			'id': id,
-			'status': status,
-			'action': 'update_status'
-		}, function(data) {
-			location.reload()
-		})
-	}
+    function changeStatus(id, status) {
+        $.post('form_api.php', {
+            'id': id,
+            'status': status,
+            'action': 'update_status'
+        }, function(data) {
+            location.reload();
+        });
+    }
 </script>
+
+
 
 <?php
 require_once('../layouts/footer.php');
