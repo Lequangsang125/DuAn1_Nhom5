@@ -1,5 +1,3 @@
-
-
 <?php
 session_start();
 
@@ -14,6 +12,6 @@ if($user != null) {
 	execute($sql);
 	setcookie('token', '', time() - 100, '/');
 }
-header('Location: login.php');
+header('Location: ../../../../../webbanhang1/index.php');
 
 session_destroy();

@@ -17,7 +17,7 @@ session_start();
     <title><?=$title?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="https://p16-capcut-va.ibyteimg.com/tos-maliva-i-6rr7idwo9f-us/1712654623405.657~tplv-6rr7idwo9f-image.image" />
+    <link rel="icon" type="image/png" href="https://img.freepik.com/premium-vector/fashion-logo-template-design_278222-5475.jpg" />
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
