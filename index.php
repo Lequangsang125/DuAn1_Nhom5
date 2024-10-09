@@ -1,10 +1,12 @@
 <?php 
 require_once('layouts/header.php');
 
-$sql = "select Product.*, Category.name as category_name from Product left join Category on Product.category_id = Category.id order by Product.updated_at desc limit 0,8";
+$sql = "SELECT Product.*, Category.name as category_name FROM Product 
+        LEFT JOIN Category ON Product.category_id = Category.id 
+        ORDER BY Product.updated_at DESC LIMIT 0,8";
 $lastestItems = executeResult($sql);
 ?>
-<!-- banner -->
+<!-- Banner Slider -->
 <div id="demo" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ul class="carousel-indicators">
@@ -13,16 +15,16 @@ $lastestItems = executeResult($sql);
     <li data-target="#demo" data-slide-to="2"></li>
   </ul>
 
-  <!-- The slideshow -->
+  <!-- Slideshow images -->
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="https://t004.gokisoft.com/uploads/2021/07/1-s-1634-banner-web.jpg" alt="Los Angeles">
+      <img src="https://intphcm.com/data/upload/dung-luong-banner-thoi-trang.jpg" class="d-block w-100" alt="Los Angeles">
     </div>
     <div class="carousel-item">
-      <img src="https://t004.gokisoft.com/uploads/2021/07/2-s-1634-banner-web.jpg" alt="Chicago">
+      <img src="https://t004.gokisoft.com/uploads/2021/07/2-s-1634-banner-web.jpg" class="d-block w-100" alt="Chicago">
     </div>
     <div class="carousel-item">
-      <img src="https://t004.gokisoft.com/uploads/2021/07/3-s-1634-banner-web.jpg" alt="New York">
+      <img src="https://t004.gokisoft.com/uploads/2021/07/3-s-1634-banner-web.jpg" class="d-block w-100" alt="New York">
     </div>
   </div>
 
@@ -33,54 +35,65 @@ $lastestItems = executeResult($sql);
   <a class="carousel-control-next" href="#demo" data-slide="next">
     <span class="carousel-control-next-icon"></span>
   </a>
+</div>
+<!-- Banner End -->
 
+<div class="container my-5">
+    <h2 class="text-center mb-4">Sản Phẩm Mới Nhất</h2>
+    <div class="row">
+        <?php foreach($lastestItems as $item) { ?>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card product-item h-100">
+                <a href="detail.php?id=<?=$item['id']?>"><img class="card-img-top" src="<?=$item['thumbnail']?>" alt="<?=$item['title']?>" style="height: 220px; object-fit: cover;"></a>
+                <div class="card-body">
+                    <h6 class="card-title text-muted"><?=$item['category_name']?></h6>
+                    <a href="detail.php?id=<?=$item['id']?>" class="text-dark">
+                        <h5 class="card-title font-weight-bold"><?=$item['title']?></h5>
+                    </a>
+                    <p class="card-text text-danger font-weight-bold"><?=number_format($item['discount'])?> VND</p>
+                </div>
+
+            </div>
+        </div>
+        <?php } ?>
+    </div>
 </div>
-<!-- banner stop -->
-<div class="container">
-	<h1 style="text-align: center; margin-top: 20px; margin-bottom: 20px;">SẢN PHẨM MỚI NHẤT</h1>
-	<div class="row">
-	<?php
-		foreach($lastestItems as $item) {
-			echo '<div class="col-md-3 col-6 product-item">
-					<a href="detail.php?id='.$item['id'].'"><img src="'.$item['thumbnail'].'" style="width: 100%; height: 220px;"></a>
-					<p style="font-weight: bold;">'.$item['category_name'].'</p>
-					<a href="detail.php?id='.$item['id'].'"><p style="font-weight: bold;">'.$item['title'].'</p></a>
-					<p style="color: red; font-weight: bold;">'.number_format($item['discount']).' VND</p>
-					<p><button class="btn btn-success" onclick="addCart('.$item['id'].', 1)" style="width: 100%; border-radius: 0px;"><i class="bi bi-cart-plus-fill"></i> Thêm giỏ hàng</button></p>
-				</div>';
-		}
-	?>
-	</div>
-</div>
-<!-- danh muc san pham -->
+
+<!-- Danh Muc San Pham -->
 <?php
 $count = 0;
 foreach($menuItems as $item) {
-	$sql = "select Product.*, Category.name as category_name from Product left join Category on Product.category_id = Category.id where Product.category_id = ".$item['id']." order by Product.updated_at desc limit 0,4";
-	$items = executeResult($sql);
-	if($items == null || count($items) < 4) continue;
+    $sql = "SELECT Product.*, Category.name as category_name FROM Product 
+            LEFT JOIN Category ON Product.category_id = Category.id 
+            WHERE Product.category_id = ".$item['id']." 
+            ORDER BY Product.updated_at DESC LIMIT 0,4";
+    $items = executeResult($sql);
+    if($items == null || count($items) < 4) continue;
 ?>
 <div style="background-color: <?=($count++%2 == 0)?'#f7f9fa':''?>;">
-<div class="container">
-<h1 style="text-align: center; margin-top: 20px; margin-bottom: 20px;"><?=$item['name']?></h1>
-<div class="row">
-<?php
-	foreach($items as $pItem) {
-		echo '<div class="col-md-3 col-6 product-item">
-				<a href="detail.php?id='.$item['id'].'"><img src="'.$pItem['thumbnail'].'" style="width: 100%; height: 220px;"></a>
-				<p style="font-weight: bold;">'.$pItem['category_name'].'</p>
-				<a href="detail.php?id='.$item['id'].'"><p style="font-weight: bold;">'.$pItem['title'].'</p></a>
-				<p style="color: red; font-weight: bold;">'.number_format($pItem['discount']).' VND</p>
-				<p><button class="btn btn-success" onclick="addCart('.$item['id'].', 1)" style="width: 100%; border-radius: 0px;"><i class="bi bi-cart-plus-fill"></i> Thêm giỏ hàng</button></p>
-			</div>';
-	}
-?>
+    <div class="container my-5">
+        <h2 class="text-center mb-4"><?=$item['name']?></h2>
+        <div class="row">
+            <?php foreach($items as $pItem) { ?>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card product-item h-100">
+                    <a href="detail.php?id=<?=$pItem['id']?>"><img class="card-img-top" src="<?=$pItem['thumbnail']?>" alt="<?=$pItem['title']?>" style="height: 220px; object-fit: cover;"></a>
+                    <div class="card-body">
+                        <h6 class="card-title text-muted"><?=$pItem['category_name']?></h6>
+                        <a href="detail.php?id=<?=$pItem['id']?>" class="text-dark">
+                            <h5 class="card-title font-weight-bold"><?=$pItem['title']?></h5>
+                        </a>
+                        <p class="card-text text-danger font-weight-bold"><?=number_format($pItem['discount'])?> VND</p>
+                    </div>
+                    <div class="card-footer p-0">
+                        
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-<?php
-}
-?>
-<?php
-require_once('layouts/footer.php');
-?>
+<?php } ?>
+
+<?php require_once('layouts/footer.php'); ?>

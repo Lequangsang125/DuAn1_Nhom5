@@ -27,11 +27,12 @@ $data = executeResult($sql);
 				</tr>
 			</thead>
 			<tbody>
-			<?php 
-$index = 0;
+            <?php 
+
+$index = 1; // Khởi tạo biến $index ngoài vòng lặp
 foreach ($data as $item) {
     echo '<tr>
-        <th>' . (++$index) . '</th>
+        <th>' . ($index++) . '</th> <!-- Tăng giá trị $index sau mỗi lần hiển thị -->
         <td><a href="detail.php?id=' . $item['id'] . '">' . $item['fullname'] . '</a></td>
         <td><a href="detail.php?id=' . $item['id'] . '">' . $item['phone_number'] . '</a></td>
         <td><a href="detail.php?id=' . $item['id'] . '">' . $item['email'] . '</a></td>
@@ -41,17 +42,33 @@ foreach ($data as $item) {
         <td>' . $item['order_date'] . '</td>
         <td style="width: 150px">';
 
-    // Dropdown menu thay đổi trạng thái
-    echo '<select onchange="changeStatus(' . $item['id'] . ', this.value)" class="form-select">
-            <option value="1" ' . ($item['status'] == 1 ? 'selected' : '') . '>Chờ lấy hàng</option>
-            <option value="2" ' . ($item['status'] == 2 ? 'selected' : '') . '>Chờ giao hàng</option>
-            <option value="3" ' . ($item['status'] == 3 ? 'selected' : '') . '>Đã giao hàng</option>
-            <option value="4" ' . ($item['status'] == 4 ? 'selected' : '') . '>Hủy</option>
-          </select>';
+    // Determine the available options based on the current status
+    echo '<select onchange="changeStatus(' . $item['id'] . ', this.value)" class="form-select">';
+
+    if ($item['status'] == 0) { // Initial status: allow choosing Đang lấy hàng or Hủy
+        echo '<option value="0" selected>Chọn trạng thái</option>
+              <option value="1">Đang lấy hàng</option>
+              <option value="4">Hủy</option>';
+    } elseif ($item['status'] == 1) { // Đang lấy hàng
+        echo '<option value="1" selected>Đang lấy hàng</option>
+              <option value="2">Đang giao hàng</option>';
+    } elseif ($item['status'] == 2) { // Đang giao hàng
+        echo '<option value="2" selected>Đang giao hàng</option>
+              <option value="3">Đã giao hàng</option>';
+    } elseif ($item['status'] == 3) { // Đã giao hàng
+        echo '<option value="3" selected>Đã giao hàng</option>';
+    } elseif ($item['status'] == 4) { // Hủy
+        echo '<option value="4" selected>Hủy</option>';
+    }
+
+    echo '</select>';
 
     echo '</td></tr>';
 }
+
 ?>
+
+
 
 
 			</tbody>

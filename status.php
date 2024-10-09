@@ -37,9 +37,9 @@ $data = executeResult($sql);
                     if ($item['status'] == 0) {
                         echo '<span class="badge badge-warning">Chờ xác nhận</span>';
                     } else if ($item['status'] == 1) {
-                        echo '<span class="badge badge-success">Chờ lấy hàng</span>';
+                        echo '<span class="badge badge-success">Đang lấy hàng</span>';
                     } else if ($item['status'] == 2) {
-                        echo '<span class="badge badge-success">Chờ giao hàng</span>';
+                        echo '<span class="badge badge-success">Đang giao hàng</span>';
                     } else if ($item['status'] == 3) {
                         echo '<span class="badge badge-success">Giao thành công</span>';
                     } else {
