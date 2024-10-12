@@ -20,6 +20,7 @@ if(!isset($_SESSION['cart'])) {
 }
 
 $index = 0;
+$totalItems = 0; // Biến để đếm số sản phẩm hợp lệ trong giỏ hàng
 
 // Duyệt qua các sản phẩm trong giỏ hàng
 foreach($_SESSION['cart'] as $item) {
@@ -27,6 +28,8 @@ foreach($_SESSION['cart'] as $item) {
 	if (!isset($item['thumbnail']) || !isset($item['title']) || !isset($item['discount']) || !isset($item['num']) || !isset($item['id'])) {
 		continue; // Bỏ qua sản phẩm nếu thiếu dữ liệu
 	}
+
+	$totalItems++; // Tăng biến đếm khi có sản phẩm hợp lệ
 
 	// Hiển thị dữ liệu sản phẩm nếu đầy đủ thông tin
 	echo '<tr>
@@ -45,7 +48,10 @@ foreach($_SESSION['cart'] as $item) {
 }
 ?>
 		</table>
-		<a href="checkout.php"><button class="btn btn-success" style="border-radius: 0px; font-size: 26px;">TIẾP TỤC THANH TOÁN</button></a>
+		
+		<?php if($totalItems > 0) { // Chỉ hiển thị nút tiếp tục thanh toán khi có sản phẩm trong giỏ ?>
+			<a href="checkout.php"><button class="btn btn-success" style="border-radius: 0px; font-size: 26px;">TIẾP TỤC THANH TOÁN</button></a>
+		<?php } ?>
 	</div>
 </div>
 <script type="text/javascript">
@@ -76,4 +82,4 @@ foreach($_SESSION['cart'] as $item) {
 </script>
 <?php
 require_once('layouts/footer.php');
-?>
+?> 

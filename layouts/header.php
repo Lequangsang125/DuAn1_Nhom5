@@ -5,6 +5,7 @@
 
 	$sql = "select * from Category";
 	$menuItems = executeResult($sql);
+	$user = getUserToken();
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +14,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Trang Chủ - Shop Thời Trang</title>
-	<link rel="shortcut icon" href="https://t004.gokisoft.com/uploads/2021/07/1-s-1637-ico-web.jpg">
+	<link rel="shortcut icon" href="https://img.freepik.com/premium-vector/fashion-logo-template-design_278222-5475.jpg">
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -28,6 +29,9 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 	<style type="text/css">
 		.nav li {
@@ -90,26 +94,52 @@
 	</style>
 </head>
 <body>
+
 <!-- Menu START -->
-<div class="container">
-	<ul class="nav">
-		<li class="nav-item" style="margin-top: 0px !important;">
-			<a href="index.php"><img src="https://t004.gokisoft.com/uploads/2021/07/1-s-1636-logo-web.jpg" style="height: 80px;"></a>
-		</li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="index.php">Trang Chủ</a>
-	  </li>
-	  <?php
-	  	foreach($menuItems as $item) {
-	  		echo '<li class="nav-item">
-				    <a class="nav-link" href="category.php?id='.$item['id'].'">'.$item['name'].'</a>
-				  </li>';
-	  	}
-	  ?>
-	  
-	  <li class="nav-item">
-	    <a class="nav-link" href="contact.php">Liên Hệ</a>
-	  </li>
-	</ul>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand" href="index.php">
+      <img src="https://img.freepik.com/premium-vector/fashion-logo-template-design_278222-5475.jpg" style="height: 80px;">
+    </a>
+
+    <!-- Toggle button for mobile view -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <!-- Categories from Database -->
+        <?php foreach($menuItems as $item): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="category.php?id=<?= $item['id']; ?>"><?= $item['name']; ?></a>
+          </li>
+        <?php endforeach; ?>
+
+        <li class="nav-item">
+          <a class="nav-link" href="contact.php">Liên Hệ</a>
+        </li>
+
+        <!-- User-specific Links -->
+        <?php if ($user != null): ?>
+          <!-- Hiển thị trạng thái đơn hàng nếu đã đăng nhập -->
+          <li class="nav-item">
+            <a class="nav-link" href="../../webbanhang1/status.php">Trạng thái đơn hàng</a>
+          </li>
+          <!-- Hiển thị nút Đăng xuất -->
+          <li class="nav-item">
+            <a class="nav-link" href="../../webbanhang1/admin/authen/logout.php">Đăng xuất</a>
+          </li>
+        <?php else: ?>
+          <!-- Hiển thị nút Đăng nhập nếu chưa đăng nhập -->
+          <li class="nav-item">
+            <a class="nav-link" href="../../webbanhang1/admin/authen/login.php">Đăng nhập</a>
+          </li>
+        <?php endif; ?>
+      </ul>
+    </div>
+  </div>
+</nav>
 <!-- Menu Stop -->
