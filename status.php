@@ -1,12 +1,12 @@
 <?php 
 require_once('layouts/header.php');
 
-
 $sql = "select * from Orders order by status asc, order_date desc";
 $data = executeResult($sql);
 
 ?>
 
+<?php if ($user != null): ?>
 <div class="details container">
     <div class="recentOrders">
         <div class="cardHeader">
@@ -29,11 +29,12 @@ $data = executeResult($sql);
                 foreach ($data as $item) {
                     echo '<tr>
                     <th scope="row">' . (++$index) . '</th>
-                    <td>'  . $item['fullname'] . '</td>
-                    <td>'  . $item['email'] . '</td>
-                    <td>' . number_format($item['total_money']) . ' VNĐ</td>
-                    <td>' . date("d-m-Y", strtotime($item['order_date'])) . '</td>
+                    <td><a href="detail1.php?id=' . $item['id'] . '">' . $item['fullname'] . '</a></td>
+                    <td><a href="detail1.php?id=' . $item['id'] . '">' . $item['email'] . '</a></td>
+                    <td><a href="detail1.php?id=' . $item['id'] . '">' . number_format($item['total_money']) . ' VNĐ</a></td>
+                    <td><a href="detail1.php?id=' . $item['id'] . '">' . date("d-m-Y", strtotime($item['order_date'])) . '</a></td>
                     <td>';
+                    
                     if ($item['status'] == 0) {
                         echo '<span class="badge badge-warning">Chờ xác nhận</span>';
                     } else if ($item['status'] == 1) {
@@ -42,20 +43,22 @@ $data = executeResult($sql);
                         echo '<span class="badge badge-success">Đang giao hàng</span>';
                     } else if ($item['status'] == 3) {
                         echo '<span class="badge badge-success">Giao thành công</span>';
+                    } else if ($item['status'] == 5) {
+                        echo '<span class="badge badge-success">Đã thanh toán</span>';
                     } else {
                         echo '<span class="badge badge-danger">Đơn bị hủy</span>';
                     }
                     echo '</td>
                     </tr>';
                 }
+                
             ?>     
             </tbody>
         </table>
     </div>
 </div>
-
-
+<?php endif; ?>
 
 <?php
 require_once('layouts/footer.php');
-?> 
+?>

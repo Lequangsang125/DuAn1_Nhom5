@@ -42,10 +42,10 @@ foreach ($data as $item) {
         <td>' . $item['order_date'] . '</td>
         <td style="width: 150px">';
 
-    // Determine the available options based on the current status
+    // Tùy chọn trạng thái dựa vào giá trị status hiện tại
     echo '<select onchange="changeStatus(' . $item['id'] . ', this.value)" class="form-select">';
 
-    if ($item['status'] == 0) { // Initial status: allow choosing Đang lấy hàng or Hủy
+    if ($item['status'] == 0) { // Trạng thái ban đầu: có thể chọn Đang lấy hàng hoặc Hủy
         echo '<option value="0" selected>Chọn trạng thái</option>
               <option value="1">Đang lấy hàng</option>
               <option value="4">Hủy</option>';
@@ -56,9 +56,12 @@ foreach ($data as $item) {
         echo '<option value="2" selected>Đang giao hàng</option>
               <option value="3">Đã giao hàng</option>';
     } elseif ($item['status'] == 3) { // Đã giao hàng
-        echo '<option value="3" selected>Đã giao hàng</option>';
+        echo '<option value="3" selected>Đã giao hàng</option>
+              <option value="5">Đã thanh toán</option>';
     } elseif ($item['status'] == 4) { // Hủy
         echo '<option value="4" selected>Hủy</option>';
+    } elseif ($item['status'] == 5) { // Đã thanh toán
+        echo '<option value="5" selected>Đã thanh toán</option>';
     }
 
     echo '</select>';
