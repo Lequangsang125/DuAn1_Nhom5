@@ -1,0 +1,11 @@
+/* Điều chỉnh cho màn hình nhỏ hơn 768px */
+@media (max-width: 768px) {
+    .table th, .table td {
+        font-size: 14px; /* Giảm kích thước font */
+    }
+
+    .btn {
+        width: 100%; /* Nút chiếm toàn bộ chiều rộng */
+        margin-bottom: 10px; /* Khoảng cách giữa các nút */
+    }
+}
