@@ -6,6 +6,7 @@ $data = executeResult($sql);
 
 ?>
 
+<?php if ($user != null): ?>
 <div class="details container">
     <div class="recentOrders">
         <div class="cardHeader">
@@ -50,11 +51,13 @@ $data = executeResult($sql);
                     echo '</td>
                     </tr>';
                 }
+                
             ?>     
             </tbody>
         </table>
     </div>
 </div>
+<?php endif; ?>
 
 <?php
 require_once('layouts/footer.php');
