@@ -31,7 +31,7 @@ if (!empty($_POST)) {
         if ($userExist['role_id'] == 1) {
             // Nếu là admin, chuyển hướng tới trang admin
             header('Location: ../../../../../webbanhang1/admin');
-        } elseif ($userExist['role_id'] == 2) {
+        } elseif ($userExist['role_id'] == 2 ) {
             // Nếu là người dùng thông thường, chuyển hướng tới trang index
             header('Location: ../../../../../webbanhang1/index.php');
         } else {
@@ -40,5 +40,6 @@ if (!empty($_POST)) {
         }
         die();
     }
+
 }
 ?>

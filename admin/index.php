@@ -1,4 +1,16 @@
 <?php
+// kiem tra neu chua dang nhập
+if (!isset($_SESSION['user'])) {
+    header('Location: ../../../../../webbanhang1/login.php'); 
+    exit();
+}
+
+// kiem tra id nguoi dung
+$user = $_SESSION['user'];
+if ($user['role_id'] == 2) {
+    header('Location: ../../../../../webbanhang1/index.php'); 
+    exit();
+}
 
 $title = 'Dashboard Page';
 $baseUrl='';
@@ -27,6 +39,7 @@ $totalMoney = $result['totalRevenue'];
 
 $sql = "select * from Orders order by status asc, order_date desc";
 $data = executeResult($sql);
+
 
 
 
