@@ -8,6 +8,10 @@ session_start();
     header('Location: '.$baseUrl.'authen/login.php');
     exit();
   }
+  if ($user['role_id'] == 2) {
+     header('Location: ../../../../../webbanhang1/index.php'); 
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
